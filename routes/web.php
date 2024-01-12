@@ -1,18 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\PersonaDomicilioController;
+use App\Http\Controllers\LoginController;
+use App\Models\PersonaDomicilio;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('.welcome');
+
+Route::get('registro', [LoginController::class, 'showRegistro'])->name('registro.showRegistro');
+
+Route::post('registro', [LoginController::class, 'store'])->name('registro.store');
+
+Route::post('login', [LoginController::class, 'login']);
+
+
+Route::resource('personas', PersonaController::class);
+Route::resource('personas.domicilios', PersonaDomicilioController::class);
+
+
+Route::get('personas.search', [PersonaController::class, 'search'])->name('personas.search');
+
+Route::put('personas.{persona}', [PersonaController::class, 'activated'])->name('personas.activated');
+
+
+
+
